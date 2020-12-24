@@ -35,6 +35,7 @@ var evidences_map = [/* This is formatted this way so that the algorithms that w
 
 var ghosts_map = [
     {
+        ignore:true,
         name:"Not yet discovered",
         evidence:[
             0,

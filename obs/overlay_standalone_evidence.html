@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Overlay</title>
+</head>
+<body>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            font-size: 0;
+        }
+        .html-structure{
+            display: none;
+        }
+        .container{
+            width: 100vw;
+            overflow: hidden;
+            border-collapse: collapse;
+        }
+        .evidence-container{
+            display: inline-block;
+            width: calc(100% - 4px);
+            height: auto;
+            padding: 1px;
+            border-collapse: collapse;
+        }
+        .evidence-container img{
+            display: inline-block;
+            width: calc(100% - 4px);
+            height: auto;
+            border: 2px solid #333333;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+    <div class="container" id="main_container">
+        
+    </div>
+    <div class="html-structure">
+        <div id="evidence_structure">
+            <div class="evidence-container">
+                <img src="" class="evidence-icon">
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        function getEvidence() {
+            let evidence_amount = 3;
+            let evidence = [];
+            for (let i = 0; i < evidence_amount; i++) {
+                let c_evidence = Number(localStorage.getItem("evidence_"+i));
+                if (c_evidence > 0) {
+                    evidence.push(localStorage.getItem("evidence_"+i));
+                }
+            }
+            printEvidence(evidence);
+        }
+        function printEvidence(evidence) {
+            let structure = document.getElementById('evidence_structure').innerHTML;
+            let container = document.getElementById('main_container');
+            let contents = "";
+            for (let i = 0; i < evidence.length; i++) {
+                contents += structure;
+            }
+            container.innerHTML = contents;
+            populateEvidence(evidence);
+        }
+        function populateEvidence(evidence) {
+            let icon_elements = document.getElementsByClassName('evidence-icon');
+            for (let i = 0; i < icon_elements.length; i++) {
+                icon_elements[i].setAttribute('src', "assets/evidence_"+evidence[i]+".svg");
+            }
+        }
+        function renderAppearance() {
+
+        }
+        function update() {
+            renderAppearance();
+            getEvidence();
+        }
+        update();
+        setInterval(update, 1000);
+    </script>
+    
+</body>
+</html>

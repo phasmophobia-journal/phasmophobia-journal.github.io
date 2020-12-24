@@ -3,6 +3,11 @@ body{
     background-size: cover;
     background-color: rgba(0, 0, 0, 0.6);
 }
+ul, li{
+    font-size: inherit;
+    color: inherit;
+    list-style-position: inside;
+}
 .container{
     text-align: center;
     background-color: rgba(0, 0, 0, 0.6);
@@ -56,7 +61,9 @@ body{
 }
 .left-page-title{
     text-align: center;
-    /*margin: 0;*/
+}
+.left-page-text{
+    margin-top: 6% !important;
 }
 .left-page-text, .right-page-text{
     text-align: left;

@@ -137,13 +137,26 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 14px;
         }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
         .light{
             color: #333333;
-            background-color: #ffffff;
+            background-color: #fefefe;
         }
         .dark{
             color: #fefefe;
             background-color: #333333;
+        }
+        .hr{
+            display: block;
+            margin-top: 20px;
+            height: 1px;
+            background-color: #808080;
         }
         .container{
             padding: 30px 20px;
@@ -165,18 +178,33 @@
         .evidence-section{
             margin-bottom: 8px;
         }
+        
+        input{
+            padding: 3px;
+            border-radius: 2px;
+        }
+        input ::placeholder{
+            color: inherit;
+            opacity: 1;
+        }
+        .light input{
+            border: 1px solid #767676;
+        }
+        .dark input{
+            border: 1px solid #767676;
+        }
 
         .light .evidence-section i{
             color: #555555;
         }
-        .light .evidence-section select{
+        .light select, .light input{
             background-color: #eeeeee;
             color: #555555;
         }
         .dark .evidence-section i{
             color: #dddddd;
         }
-        .dark .evidence-section select{
+        .dark select, .dark input{
             background-color: #555555;
             color: #dddddd;
         }
@@ -210,6 +238,20 @@
         }
         .theme-option{
             margin-top: 7px;
+        }
+        .evidence-overlay-settings .theme-option{
+            margin-top: 25px;
+        }
+        .rgb-inputs-container{
+            padding-top: 10px;
+        }
+        .rgb-input{
+            display: inline-block;
+            width: 30px;
+        }
+        .evidence-bg-opacity{
+            margin-top: 10px;
+            width: 100%;
         }
     </style>
     <div class="container">
@@ -255,16 +297,7 @@
         <ol id="ghosts_list">
         </ol>
         <p class="title2">Appearance</p>
-        <p class="title3">Overlay Theme</p>
-        <div class="theme-option">
-            <input type="radio" id="overlay_dark" name="overlaytheme" value="dark" onchange="updateThemes();">
-            <label for="overlay_dark">Dark</label><br>
-        </div>
-        <div class="theme-option">
-            <input type="radio" id="overlay_light" name="overlaytheme" value="light" onchange="updateThemes();">
-            <label for="overlay_light">Light</label><br>
-        </div>
-
+        
         <p class="title3">Dock Theme</p>
         <div class="theme-option">
             <input type="radio" id="dock_dark" name="docktheme" value="dark" onchange="updateThemes();">
@@ -274,6 +307,56 @@
             <input type="radio" id="dock_light" name="docktheme" value="light" onchange="updateThemes();">
             <label for="dock_light">Light</label><br>
         </div>
+        <div class="hr"></div>
+        <p class="title3">Compressed Overlay Theme</p>
+        <div class="theme-option">
+            <input type="radio" id="overlay_dark" name="overlaytheme" value="dark" onchange="updateThemes();">
+            <label for="overlay_dark">Dark</label><br>
+        </div>
+        <div class="theme-option">
+            <input type="radio" id="overlay_light" name="overlaytheme" value="light" onchange="updateThemes();">
+            <label for="overlay_light">Light</label><br>
+        </div>
+        <div class="hr"></div>
+        <div class="evidence-overlay-settings">
+            <p class="title3">Evidence Overlay Appearance</p>
+            <div class="theme-option">
+                <label for="evidence_bg_color_0">Orientation:</label>
+                <select id="evidence_orientation" class="memory-input">
+                    <option value="landscape" selected>Landscape</option>
+                    <option value="portrait">Portrait</option>
+                </select>
+            </div>
+
+            <div class="theme-option">
+                <label for="evidence_bg_color_0">Background Color (RGB):</label>
+                <div class="rgb-inputs-container">
+                    <input type="number" id="evidence_bg_color_0" min="0" max="255" placeholder="R" class="rgb-input memory-input" value="255">
+                    <input type="number" id="evidence_bg_color_1" min="0" max="255" placeholder="G" class="rgb-input memory-input" value="255">
+                    <input type="number" id="evidence_bg_color_2" min="0" max="255" placeholder="B" class="rgb-input memory-input" value="255">
+                </div>
+            </div>
+            
+            <div class="theme-option">
+                <label for="evidence_bg_opacity">Background Opacity: <i id="evidence_bg_opacity_num"></i>%</label>
+                <input type="range" id="evidence_bg_opacity" min="0" max="100" class="evidence-bg-opacity memory-input" value="50">
+            </div>
+
+            <div class="theme-option">
+                <label for="evidence_border_color_0">Border Color (RGB):</label>
+                <div class="rgb-inputs-container">
+                    <input type="number" id="evidence_border_color_0" min="0" max="255" placeholder="R" class="rgb-input memory-input" value="0">
+                    <input type="number" id="evidence_border_color_1" min="0" max="255" placeholder="G" class="rgb-input memory-input" value="0">
+                    <input type="number" id="evidence_border_color_2" min="0" max="255" placeholder="B" class="rgb-input memory-input" value="0">
+                </div>
+            </div>
+            
+            <div class="theme-option">
+                <label for="evidence_border_opacity">Border Opacity: <i id="evidence_border_opacity_num"></i>%</label>
+                <input type="range" id="evidence_border_opacity" min="0" max="100" class="evidence-bg-opacity memory-input" value="0">
+            </div>
+        </div>
+        
     </div>
 
 
@@ -358,6 +441,48 @@
                 }
             }
         }
+        function updateSliderValue(element) {
+            try {
+                num_field = document.getElementById(element.id+"_num");
+                num_field.innerHTML = element.value;
+            } catch (error) {
+                //console.log("original id: "+element.id);
+                //console.log(error);
+            }
+        }
+        function saveOnMemory(element) {
+            localStorage.setItem(element.id, element.value);
+            updateSliderValue(element);
+        }
+        function loadFromMemory(element) {
+            let saved_value = localStorage.getItem(element.id);
+            try {
+                if (saved_value.length > 0) {
+                element.value = saved_value;
+                }
+                else{/*loads the deault values into the memory*/
+                    localStorage.setItem(element.id, element.value);
+                }
+            } catch (error) {
+                /*this isn't actually redundant by nature but it might be for the existent use cases*/
+                localStorage.setItem(element.id, element.value);
+            }
+            
+            updateSliderValue(element);
+        }
+        function initializeMemory() {
+            let inputs = document.getElementsByClassName('memory-input');
+            
+            for (let i = 0; i < inputs.length; i++) {
+                /*loads the memory*/
+                loadFromMemory(inputs[i]);
+
+                /*adds event listener so that the inputs update the memory when changed*/
+                inputs[i].addEventListener('change', function () {
+                    saveOnMemory(inputs[i]);
+                });
+            }
+        }
 
 
 
@@ -369,6 +494,7 @@
         updateEvidence();
         themesMemory();
         renderTheme();
+        initializeMemory();
 
 
 

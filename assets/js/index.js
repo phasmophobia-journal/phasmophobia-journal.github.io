@@ -17,7 +17,7 @@ function evaluateEvidence(evidence) {
             }
         }
         if (valid_ghost) {
-            global_map.possible_ghosts.push({name:ghosts_map[i].name, description:ghosts_map[i].description});
+            global_map.possible_ghosts.push({ignore:ghosts_map[i].ignore, name:ghosts_map[i].name, evidence:ghosts_map[i].evidence, description:ghosts_map[i].description});
         }
     }
     if (global_map.possible_ghosts.length) {
@@ -83,17 +83,34 @@ function printGhostInfo(id) {
     else{
         if (global_map.possible_ghosts.length == ghosts_map.length) {
             if (id > 0) {
-                overline.innerHTML = (id)+" out of "+(global_map.possible_ghosts.length - 1)+" ghosts matching description";
+                overline.innerHTML = (id)+" out of "+(global_map.possible_ghosts.length - 1)+" ghosts matching evidence found";
             }
             else{
                 overline.innerHTML = "";
             }
         }
         else{
-            overline.innerHTML = (id+1)+" out of "+global_map.possible_ghosts.length+" ghosts matching description";
+            overline.innerHTML = (id+1)+" out of "+global_map.possible_ghosts.length+" ghosts matching evidence found";
         }
         title.innerHTML = global_map.possible_ghosts[id].name;
         description.innerHTML = global_map.possible_ghosts[id].description;
+
+        //prints the evidence the ghost provides
+        if (global_map.possible_ghosts[id].ignore != true) {
+            let evidenceHTML = "<br><br>Evidence:<br><ul>";
+            for (let i = 1; i < global_map.possible_ghosts[id].evidence.length; i++) {
+                let evidence_id = Number(global_map.possible_ghosts[id].evidence[i]);
+                console.log(evidence_id);
+                console.log(evidences_map[evidence_id].name);
+                evidenceHTML += "<li>"+evidences_map[evidence_id].name+"</li>";
+            }
+            evidenceHTML += "</ul>";
+            description.innerHTML += evidenceHTML;
+        }
+        else{
+
+        }
+        
     }
 }
 function chOptionEv(targetId, direction) {
