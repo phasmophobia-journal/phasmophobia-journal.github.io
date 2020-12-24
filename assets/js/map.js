@@ -35,6 +35,16 @@ var evidences_map = [/* This is formatted this way so that the algorithms that w
 
 var ghosts_map = [
     {
+        name:"Not yet discovered",
+        evidence:[
+            0,
+            0,
+            0,
+            0
+        ],
+        description:"Gather evidence to narrow down the list of possible ghosts.<br><br>Flick through the pages using the arrows below to see all the ghosts' descriptions"
+    },
+    {
         name:"Shade",
         evidence:[
             0,

@@ -81,7 +81,17 @@ function printGhostInfo(id) {
         description.innerHTML = "No ghost matches the evidence provided, double check the evidence and try again.";
     }
     else{
-        overline.innerHTML = (id+1)+" out of "+global_map.possible_ghosts.length+" ghosts matching description";
+        if (global_map.possible_ghosts.length == ghosts_map.length) {
+            if (id > 0) {
+                overline.innerHTML = (id)+" out of "+(global_map.possible_ghosts.length - 1)+" ghosts matching description";
+            }
+            else{
+                overline.innerHTML = "";
+            }
+        }
+        else{
+            overline.innerHTML = (id+1)+" out of "+global_map.possible_ghosts.length+" ghosts matching description";
+        }
         title.innerHTML = global_map.possible_ghosts[id].name;
         description.innerHTML = global_map.possible_ghosts[id].description;
     }
