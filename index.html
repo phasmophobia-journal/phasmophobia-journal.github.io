@@ -4,33 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phasmophobia's Journal</title>
-    <link rel="icon" href="assets/icons/icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Gentium+Basic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/index.css">
     <script src="assets/js/map.js"></script>
 </head>
-<body onload="document.getElementById('buffer').classList.add('hide-buffer');">
-    <style>
-        .buffer{
-            background-color: #333333;
-            display: inline-block;
-            height: 100vh;
-            width: 100vw;
-            opacity: 1;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 999;
-            transition: opacity 0.3s ease 0s, z-index 0.1s ease 0.5s;
-        }
-        .hide-buffer{
-            opacity: 0;
-            z-index: -999;
-        }
-    </style>
-    <div class="buffer" id="buffer"></div>
+<body>
     <div class="container">
         <div class="journal-container">
             <img src="assets/img/journal.png" alt="" class="journal-img">
