@@ -2,8 +2,7 @@
     padding: 0;
     margin: 0;
     font-size: 0px;
-    font-family: Arial, Helvetica, sans-serif;
-    /*font-family: 'Gentium Basic', serif;*/
+    font-family: 'Gentium Basic', serif;
 }
 .display-none{
     display: none !important;
