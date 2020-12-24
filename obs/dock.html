@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phasmophobia's Journal</title>
+</head>
+<body id="body">
+    <script>
+        var ghosts_map = [
+            {
+                name:"Shade",
+                evidence:[
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                description:"A Shade is known to be a Shy Ghost. There is evidence that a Shade will stop all paranormal activity if there are multiple people nearby.<br><br>Unique Strengths: Being shy means the Ghost will be harder to find.<br><br>Weaknesses: The Ghost will not enter hunting mode if there is multiple people nearby."
+            },
+            {
+                name:"Phantom",
+                evidence:[
+                    0,
+                    1,
+                    2,
+                    4
+                ],
+                description:"A Phantom is a Ghost that can possess the living, most commonly summoned by a Ouija Board. It also induces fear into those around it.<br><br>Unique Strengths: Looking at a Phantom will considerably drop your sanity.<br><br>Weaknesses: Taking a photo of the Phantom will make it temporarily disappear."
+            },
+            {
+                name:"Jinn",
+                evidence:[
+                    0,
+                    1,
+                    2,
+                    5
+                ],
+                description:"A Jinn is a territorial Ghost that will attack when threatened. It also has been known to travel at significant speed.<br><br>Unique Strengths: A Jinn will travel at a faster speed if it’s victim is far away.<br><br>Weaknesses: Turning off the locations power source will prevent the Jinn from using it’s ability."
+            },
+            {
+                name:"Yurei",
+                evidence:[
+                    0,
+                    2,
+                    3,
+                    4
+                ],
+                description:"A Yurei is a Ghost that has returned to the physical world, usually for the purpose of revenge or hatred.<br><br>Unique Strengths: Yurei’s have been known to have a stronger effect on people’s sanity.<br><br>Weaknesses: Smudging the Yurei’s room will cause it to not wander around the location for a long time."
+            },
+            {
+                name:"Mare",
+                evidence:[
+                    0,
+                    2,
+                    4,
+                    5
+                ],
+                description:"A Mare is the source of all nightmares, making it most powerful in the dark.<br><br>Unique Strengths: A Mare will have an increased chance to attack in the dark.<br><br>Weaknesses: Turning the lights on around the Mare will lower it’s chance to attack."
+            },
+            {
+                name:"Demon",
+                evidence:[
+                    0,
+                    3,
+                    4,
+                    5
+                ],
+                description:"A Demon is one of the worst Ghosts you can encounter. It has been known to attack without a reason.<br><br>Unique Strengths: Demons will attack more often then any other Ghost.<br><br>Weaknesses: Asking a Demon successful questions on the Ouija Board won’t lower the users sanity."
+            },
+            {
+                name:"Banshee",
+                evidence:[
+                    0,
+                    1,
+                    4,
+                    6
+                ],
+                description:"A Banshee is a natural hunter and will attack anything. It has been known to stalk its prey one at a time until making its kill.<br><br>Unique Strengths: A Banshee will only target one person at a time.<br><br>Weaknesses: Banshees fear the Crucifix and will be less aggressive when near one."
+            },
+            {
+                name:"Revenant",
+                evidence:[
+                    0,
+                    1,
+                    3,
+                    6
+                ],
+                description:"A Revenant is a slow but violent Ghost that will attack indiscriminantly. It has been rumored to travel at a significantly high speed when hunting.<br><br>Unique Strengths: A Revenant will travel at a significantly faster speed when hunting a victim.<br><br>Weaknesses: Hiding from the Revenant will cause it to move very slowly."
+            },
+            {
+                name:"Oni",
+                evidence:[
+                    0,
+                    1,
+                    3,
+                    5
+                ],
+                description:"Onis are a cousin to the Demon and possess extreme strength. There have been rumors that they become more active around their prey.<br><br>Unique Strengths: Oni’s are more active when people are nearby and have been seen moving objects at great speed.<br><br>Weaknesses: Being more active will make the Oni easier to find and identify."
+            },
+            {
+                name:"Poltergeist",
+                evidence:[
+                    0,
+                    2,
+                    5,
+                    6
+                ],
+                description:"One of the most famous Ghosts, a Poltergeist, also known as a noisy ghost can manipulate objects around it to spread fear into it's victims.<br><br>Unique Strengths: A Poltergeist can throw huge amounts of objects at once.<br><br>Weaknesses: A Poltergeist is almost ineffective in an empty room"
+            },
+            {
+                name:"Spirit",
+                evidence:[
+                    0,
+                    3,
+                    5,
+                    6
+                ],
+                description:"A Spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death.<br><br>Unique Strengths: Nothing<br><br>Weaknesses: Using Smudge Sticks on a Spirit will stop it attacking for a long period of time."
+            },
+            {
+                name:"Wraith",
+                evidence:[
+                    0,
+                    4,
+                    5,
+                    6
+                ],
+                description:"A Wraith is one of the most dangerous Ghosts you will find. It is also the only known ghost that has the ability of flight and has sometimes been known to travel through walls.<br><br>Unique Strengths: Wraiths almost never touch the ground meaning it can’t be tracked by footsteps.<br><br>Weaknesses: Wraiths have a toxic reaction to Salt"
+            }
+        ];
+    </script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+        .light{
+            color: #333333;
+            background-color: #ffffff;
+        }
+        .dark{
+            color: #fefefe;
+            background-color: #333333;
+        }
+        .container{
+            padding: 30px 20px;
+        }
+        i{
+            font-style: normal;
+        }
+        .title, .title2{
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .title2{
+            margin-top: 30px;
+        }
+        .title3{
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .evidence-section{
+            margin-bottom: 8px;
+        }
+
+        .light .evidence-section i{
+            color: #555555;
+        }
+        .light .evidence-section select{
+            background-color: #eeeeee;
+            color: #555555;
+        }
+        .dark .evidence-section i{
+            color: #dddddd;
+        }
+        .dark .evidence-section select{
+            background-color: #555555;
+            color: #dddddd;
+        }
+        .light .reset-evidence{
+            padding: 4px 12px;
+            border: 1px solid rgb(118, 118, 118);
+            border-radius: 2px;
+        }
+        .light .reset-evidence:hover{
+            background-color: #555555;
+            color: #dddddd;
+            cursor: pointer;
+        }
+        .dark .reset-evidence{
+            padding: 4px 12px;
+            border: 1px solid rgb(118, 118, 118);
+            border-radius: 2px;
+            background-color: #555555;
+            color: #dddddd;
+        }
+        .dark .reset-evidence:hover{
+            background-color: rgb(206, 206, 206);
+            color: #333333;
+            cursor: pointer;
+        }
+        ol li{
+            list-style-position: inside;
+        }
+        .dark ol li{
+            color: #dddddd;
+        }
+        .theme-option{
+            margin-top: 7px;
+        }
+    </style>
+    <div class="container">
+        <p class="title">Select the evidence collected</p>
+        <div class="evidence-section">
+            <i>Evidence 1:</i>
+            <select name="evidence_1" id="evidence_1" class="evidence-select" onchange="updateEvidence();">
+                <option value="0" selected>No Evidence</option>
+                <option value="1">EMF Level 5</option>
+                <option value="2">Ghost Orbs</option>
+                <option value="3">Ghost Writting</option>
+                <option value="4">Freezing Temps</option>
+                <option value="5">Spirit Box</option>
+                <option value="6">Finger Prints</option>
+            </select>
+        </div>
+        <div class="evidence-section">
+            <i>Evidence 2:</i>
+            <select name="evidence_2" id="evidence_2" class="evidence-select" onchange="updateEvidence();">
+                <option value="0" selected>No Evidence</option>
+                <option value="1">EMF Level 5</option>
+                <option value="2">Ghost Orbs</option>
+                <option value="3">Ghost Writting</option>
+                <option value="4">Freezing Temps</option>
+                <option value="5">Spirit Box</option>
+                <option value="6">Finger Prints</option>
+            </select>
+        </div>
+        <div class="evidence-section">
+            <i>Evidence 3:</i>
+            <select name="evidence_3" id="evidence_3" class="evidence-select" onchange="updateEvidence();">
+                <option value="0" selected>No Evidence</option>
+                <option value="1">EMF Level 5</option>
+                <option value="2">Ghost Orbs</option>
+                <option value="3">Ghost Writting</option>
+                <option value="4">Freezing Temps</option>
+                <option value="5">Spirit Box</option>
+                <option value="6">Finger Prints</option>
+            </select>
+        </div>
+        <button class="reset-evidence" onclick="location.reload();">Reset</button>
+        <p class="title2">Matching Ghosts</p>
+        <ol id="ghosts_list">
+        </ol>
+        <p class="title2">Appearance</p>
+        <p class="title3">Overlay Theme</p>
+        <div class="theme-option">
+            <input type="radio" id="overlay_dark" name="overlaytheme" value="dark" onchange="updateThemes();">
+            <label for="overlay_dark">Dark</label><br>
+        </div>
+        <div class="theme-option">
+            <input type="radio" id="overlay_light" name="overlaytheme" value="light" onchange="updateThemes();">
+            <label for="overlay_light">Light</label><br>
+        </div>
+
+        <p class="title3">Dock Theme</p>
+        <div class="theme-option">
+            <input type="radio" id="dock_dark" name="docktheme" value="dark" onchange="updateThemes();">
+            <label for="dock_dark">Dark</label><br>
+        </div>
+        <div class="theme-option">
+            <input type="radio" id="dock_light" name="docktheme" value="light" onchange="updateThemes();">
+            <label for="dock_light">Light</label><br>
+        </div>
+    </div>
+
+
+    <script>
+        function renderTheme() {
+            document.getElementById('body').className = localStorage.getItem("dockTheme");
+        }
+        function updateThemes() {
+            let overlay_dark = document.getElementById('overlay_dark').checked;
+            let dock_dark = document.getElementById('dock_dark').checked;
+
+            if (overlay_dark) {
+                localStorage.setItem("overlayTheme", "dark");
+            }
+            else{
+                localStorage.setItem("overlayTheme", "light");
+            }
+
+            if (dock_dark) {
+                localStorage.setItem("dockTheme", "dark");
+            }
+            else{
+                localStorage.setItem("dockTheme", "light");
+            }
+
+            renderTheme();
+        }
+        function themesMemory() {
+            let overlay_theme = localStorage.getItem("overlayTheme");
+            let dock_theme = localStorage.getItem("dockTheme");
+
+            //Default values
+            if (overlay_theme == null) {
+                overlay_theme = "light";
+                localStorage.setItem("overlayTheme", overlay_theme)
+            }
+            if (dock_theme == null) {
+                dock_theme = "dark";
+                localStorage.setItem("dockTheme", dock_theme);
+            }
+
+
+            //Saved values
+            document.getElementById("overlay_"+overlay_theme).checked = true;
+            document.getElementById("dock_"+dock_theme).checked = true;
+        }
+        function updateEvidence() {
+            let evidence = document.getElementsByClassName('evidence-select');
+            let evidenceValues = [];
+            for (let i = 0; i < evidence.length; i++) {
+                localStorage.setItem("evidence_"+i, evidence[i].value);
+                evidenceValues.push(Number(evidence[i].value));/*This HAS to be forced into being a number otherwise a comparison breaks later on*/
+            }
+            
+            evaluateEvidence(evidenceValues);
+        }
+        function evaluateEvidence(evidence) {
+            let possible_ghosts = [];
+
+            for (let i = 0; i < ghosts_map.length; i++) {
+                let valid_ghost = true;
+                for (let a = 0; a < evidence.length; a++) {
+                    if (!ghosts_map[i].evidence.includes(evidence[a])) {/*Note: "includes()" doesn't work with IE, if IE compatibility is necessary then use the "some()" function instead*/
+                        valid_ghost = false;
+                    }
+                }
+                if (valid_ghost) {
+                    possible_ghosts.push({name:ghosts_map[i].name, description:ghosts_map[i].description});
+                }
+            }
+            printPossibleGhosts(possible_ghosts);
+        }
+        function printPossibleGhosts(possible_ghosts) {
+            let list = document.getElementById('ghosts_list');
+            list.innerHTML = "";
+            if (possible_ghosts.length <= 0) {
+                list.innerHTML += "<p>No Matches</p>";
+            }
+            else{
+                for (let i = 0; i < possible_ghosts.length; i++) {
+                    list.innerHTML += "<li>"+possible_ghosts[i].name+"</li>";
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+        updateEvidence();
+        themesMemory();
+        renderTheme();
+
+
+
+
+
+
+
+
+
+
+        
+    </script>
+</body>
+</html>

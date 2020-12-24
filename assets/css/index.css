@@ -1,0 +1,144 @@
+body{
+    background-image: url('../img/fog-bg.jpg');
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.container{
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    min-height: 100vh;
+}
+.journal-container{
+    display: inline-block;
+    max-width: 900px;
+    width: calc(100% - 80px);
+    margin-top: 50px;
+    position: relative;
+}
+.journal-img{
+    display: inline-block;
+    width: 100%;
+    height: auto;
+}
+
+.overlay-pages{
+    display: inline-block;
+    height: 90%;
+    width: 90%;
+    padding-top: 4%;
+    padding-bottom: 6%;
+    padding-left: 5%;
+    padding-right: 5%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.journal-left-page, .journal-right-page{
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    vertical-align: top;
+    position: relative;
+}
+
+.left-page-overline{
+    padding: 0% 15%;
+    font-size: calc(2.2 * 1vw);
+    text-align: center;
+    color: rgba(0, 0, 0, 0.8);
+}
+.right-page-text, .left-page-text, .left-page-title, .right-page-title{
+    margin-top: 10%;
+    padding: 0% 15%;
+    font-size: calc(3.8 * 1vw);
+    color: rgba(0, 0, 0, 0.8);
+}
+.left-page-title{
+    text-align: center;
+    /*margin: 0;*/
+}
+.left-page-text, .right-page-text{
+    text-align: left;
+    font-size: calc(1.8vw);
+}
+.journal-left-page .slide-option-left{
+    position: absolute;
+    bottom: 3%;
+    left: 11%;
+}
+.journal-left-page .slide-option-right{
+    position: absolute;
+    bottom: 3%;
+    right: 11%;
+}
+
+
+.slide-option-container{
+    padding: 0% 15%;
+}
+.right-page-text{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    text-align: center;
+}
+.slide-option-left, .slide-option-right{
+    display: inline-block;
+    width: 6%;
+    height: auto;
+    vertical-align: middle;
+    opacity: 0.75;
+}
+.slide-option-left:hover, .slide-option-right:hover{
+    opacity: 0.9;
+    cursor: pointer;
+}
+.slide-option-right{
+    transform: rotate(180deg);
+}
+.slide-option-disabled, .slide-option-disabled:hover{
+    cursor: default;
+    opacity: 0 !important;
+}
+.option-text{
+    display: inline-block;
+    width: 88%;
+    font-size: 2.8vw;
+    color: rgba(0, 0, 0, 0.8);
+    vertical-align: middle;
+}
+.reset-button{
+    display: inline-block;
+    padding: 2% 6%;
+    font-size: 1.8vw;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 8);
+    border-radius: 5px;
+    border: 2px rgba(0, 0, 0, 0.8) solid;
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    transition: background-color 0.3s, color 0.3s;
+}
+.reset-button:hover{
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #a19f86;
+    cursor: pointer;
+}
+
+
+
+@media only screen and (min-width: 980px) {
+    .left-page-title, .right-page-title{
+        font-size: 40px;
+    }
+    .left-page-text, .right-page-text, .reset-button{
+        font-size: 18px;
+    }
+    .option-text{
+        font-size: 28px;
+    }
+    .left-page-overline{
+        font-size: 22px;
+    }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phasmophobia's Journal</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Basic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="assets/js/map.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="journal-container">
+            <img src="assets/img/journal.png" alt="" class="journal-img">
+            
+            <div class="overlay-pages">
+                <div class="journal-left-page">
+                    <p class="left-page-title" id="left_page_title"></p>
+                    <p class="left-page-overline" id="left_page_overline"></p>
+                    <p class="left-page-text" id="left_page_text"></p>
+                    <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-left ghosts-list-nav" onclick="chOptionGhost('sl_option4', -1)">
+                    <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-right ghosts-list-nav" onclick="chOptionGhost('sl_option4', 1)">
+                </div>
+                <div class="journal-right-page">
+                    <p class="right-page-title">Evidence</p>
+                    <p class="evidence-text display-none" optionvalue="0">Default value, required by index.js | Do not delete</p>
+                    <div class="slide-option-container">
+                        <div class="right-page-text">Evidence Found #1</div>
+                        <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-left" onclick="chOptionEv('sl_option1', -1)">
+                        <p class="option-text evidence-text" optionvalue="" id="sl_option1" optionmap="evidences_map"></p>
+                        <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-right" onclick="chOptionEv('sl_option1', 1)">
+                    </div>
+                    <div class="slide-option-container">
+                        <div class="right-page-text">Evidence Found #2</div>
+                        <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-left" onclick="chOptionEv('sl_option2', -1)">
+                        <p class="option-text evidence-text" optionvalue="" id="sl_option2" optionmap="evidences_map"></p>
+                        <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-right" onclick="chOptionEv('sl_option2', 1)">
+                    </div>
+                    <div class="slide-option-container">
+                        <div class="right-page-text">Evidence Found #3</div>
+                        <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-left" onclick="chOptionEv('sl_option3', -1)">
+                        <p class="option-text evidence-text" optionvalue="" id="sl_option3" optionmap="evidences_map"></p>
+                        <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-right" onclick="chOptionEv('sl_option3', 1)">
+                    </div>
+                    <div class="slide-option-container">
+                        <div class="right-page-text">Matching Ghosts</div>
+                        <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-left ghosts-list-nav" onclick="chOptionGhost('sl_option4', -1)">
+                        <p class="option-text ghosttype-text" optionvalue="" id="sl_option4" optionmap="possible_ghosts"></p>
+                        <img src="assets/icons/arrow_left.svg" alt="" class="slide-option-right ghosts-list-nav" onclick="chOptionGhost('sl_option4', 1)">
+                    </div>
+                    <button onclick="optionsReset();" class="reset-button">Reset Journal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="assets/js/index.js"></script>
+</body>
+</html>
