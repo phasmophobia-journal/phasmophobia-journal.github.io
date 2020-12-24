@@ -3,7 +3,7 @@ Evidence Values:
 Default/No evidence = 0     Note: This value is a default value required for the javascript to work, every ghost entry should have it as an acceptable evidence
 EMF Level 5     = 1
 Ghost Orbs      = 2
-Ghost Writting  = 3
+Ghost Writing  = 3
 Freezing Temps  = 4
 Spirit Box      = 5
 Finger Prints   = 6
@@ -20,7 +20,7 @@ var evidences_map = [/* This is formatted this way so that the algorithms that w
         name:"Ghost Orbs"
     },
     {
-        name:"Ghost Writting"
+        name:"Ghost Writing"
     },
     {
         name:"Freezing Temps"
