@@ -237,9 +237,6 @@
             color: #dddddd;
         }
         .theme-option{
-            margin-top: 7px;
-        }
-        .evidence-overlay-settings .theme-option{
             margin-top: 25px;
         }
         .rgb-inputs-container{
@@ -296,35 +293,43 @@
         <p class="title2">Matching Ghosts</p>
         <ol id="ghosts_list">
         </ol>
-        <p class="title2">Appearance</p>
+        <p class="title2">Appearance Settings</p>
         
-        <p class="title3">Dock Theme</p>
+        <p class="title3">OBS Dock Appearance</p>
         <div class="theme-option">
-            <input type="radio" id="dock_dark" name="docktheme" value="dark" onchange="updateThemes();">
-            <label for="dock_dark">Dark</label><br>
-        </div>
-        <div class="theme-option">
-            <input type="radio" id="dock_light" name="docktheme" value="light" onchange="updateThemes();">
-            <label for="dock_light">Light</label><br>
+            <label for="dockTheme">Theme:</label>
+            <select id="dockTheme" class="memory-input" onchange="renderTheme(this.value);">
+                <option value="dark" selected>Dark Theme</option>
+                <option value="light">Light Theme</option>
+            </select>
         </div>
         <div class="hr"></div>
-        <p class="title3">Compressed Overlay Theme</p>
+        <p class="title3">All-in-One Overlay Appearance</p>
         <div class="theme-option">
-            <input type="radio" id="overlay_dark" name="overlaytheme" value="dark" onchange="updateThemes();">
-            <label for="overlay_dark">Dark</label><br>
+            <label for="overlayTheme">Theme:</label>
+            <select id="overlayTheme" class="memory-input">
+                <option value="dark" selected>Dark Theme</option>
+                <option value="light">Light Theme</option>
+            </select>
         </div>
+
         <div class="theme-option">
-            <input type="radio" id="overlay_light" name="overlaytheme" value="light" onchange="updateThemes();">
-            <label for="overlay_light">Light</label><br>
+            <label for="compressed_hide_section">Show:</label>
+            <select id="compressed_hide_section" class="memory-input">
+                <option value="" selected>Evidence and Ghosts</option>
+                <option value="hide-evidence">Only Ghosts</option>
+                <option value="hide-ghosts">Only Evidence</option>
+            </select>
         </div>
+
         <div class="hr"></div>
         <div class="evidence-overlay-settings">
             <p class="title3">Evidence Overlay Appearance</p>
             <div class="theme-option">
                 <label for="evidence_bg_color_0">Orientation:</label>
                 <select id="evidence_orientation" class="memory-input">
-                    <option value="landscape" selected>Landscape</option>
-                    <option value="portrait">Portrait</option>
+                    <option value="transform: rotate(0deg);" selected>Portrait</option>
+                    <option value="transform: rotate(90deg);">Landscape</option>
                 </select>
             </div>
 
@@ -361,28 +366,8 @@
 
 
     <script>
-        function renderTheme() {
-            document.getElementById('body').className = localStorage.getItem("dockTheme");
-        }
-        function updateThemes() {
-            let overlay_dark = document.getElementById('overlay_dark').checked;
-            let dock_dark = document.getElementById('dock_dark').checked;
-
-            if (overlay_dark) {
-                localStorage.setItem("overlayTheme", "dark");
-            }
-            else{
-                localStorage.setItem("overlayTheme", "light");
-            }
-
-            if (dock_dark) {
-                localStorage.setItem("dockTheme", "dark");
-            }
-            else{
-                localStorage.setItem("dockTheme", "light");
-            }
-
-            renderTheme();
+        function renderTheme(dock_theme) {
+            document.getElementById('body').className = dock_theme;
         }
         function themesMemory() {
             let overlay_theme = localStorage.getItem("overlayTheme");
@@ -397,11 +382,6 @@
                 dock_theme = "dark";
                 localStorage.setItem("dockTheme", dock_theme);
             }
-
-
-            //Saved values
-            document.getElementById("overlay_"+overlay_theme).checked = true;
-            document.getElementById("dock_"+dock_theme).checked = true;
         }
         function updateEvidence() {
             let evidence = document.getElementsByClassName('evidence-select');
@@ -493,7 +473,7 @@
 
         updateEvidence();
         themesMemory();
-        renderTheme();
+        renderTheme(localStorage.getItem('dockTheme'));
         initializeMemory();
 
 

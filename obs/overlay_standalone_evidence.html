@@ -31,7 +31,7 @@
             display: inline-block;
             width: calc(100% - 4px);
             height: auto;
-            border: 2px solid #333333;
+            border: 2px solid rgba(255, 255, 255, 0.4);
             background-color: rgba(255, 255, 255, 0.4);
         }
     </style>
@@ -41,7 +41,7 @@
     <div class="html-structure">
         <div id="evidence_structure">
             <div class="evidence-container">
-                <img src="" class="evidence-icon">
+                <img src="" class="evidence-icon" style>
             </div>
         </div>
         
@@ -71,12 +71,37 @@
         }
         function populateEvidence(evidence) {
             let icon_elements = document.getElementsByClassName('evidence-icon');
-            for (let i = 0; i < icon_elements.length; i++) {
-                icon_elements[i].setAttribute('src', "assets/evidence_"+evidence[i]+".svg");
+            for (let i = 0; i < evidence.length; i++) {
+                let src_path = "assets/evidence_"+evidence[i]+".svg";
+                icon_elements[i].setAttribute('src', src_path);
             }
         }
         function renderAppearance() {
+            try {
+                let icon_style = "";
 
+                let bg_rgb_r = localStorage.getItem('evidence_bg_color_0');
+                let bg_rgb_g = localStorage.getItem('evidence_bg_color_1');
+                let bg_rgb_b = localStorage.getItem('evidence_bg_color_2');
+                let bg_rgb_d = Number(localStorage.getItem('evidence_bg_opacity'))/100;
+                let icon_elements = document.getElementsByClassName('evidence-icon');
+                icon_style = "background-color: rgba("+bg_rgb_r+", "+bg_rgb_g+", "+bg_rgb_b+", "+bg_rgb_d+"); ";
+
+                let brdr_rgb_r = localStorage.getItem('evidence_border_color_0');
+                let brdr_rgb_g = localStorage.getItem('evidence_border_color_1');
+                let brdr_rgb_b = localStorage.getItem('evidence_border_color_2');
+                let brdr_rgb_d = Number(localStorage.getItem('evidence_border_opacity'))/100;
+                icon_style += "border-color: rgba("+brdr_rgb_r+", "+brdr_rgb_g+", "+brdr_rgb_b+", "+brdr_rgb_d+"); ";
+
+                icon_style += localStorage.getItem('evidence_orientation');
+
+
+                for (let i = 0; i < icon_elements.length; i++) {
+                    icon_elements[i].style = icon_style;
+                }
+            } catch (error) {
+                
+            }
         }
         function update() {
             renderAppearance();

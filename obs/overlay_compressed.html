@@ -239,24 +239,48 @@
             transition: opacity 0.3s;
         }
 
+        .hide-evidence .evidence-section{
+            display: none;
+        }
+        .hide-ghosts .ghosts-section{
+            display: none;
+        }
+
     </style>
     <div class="container">
-        <p class="title">Evidence Found</p>
-        <div class="evidence-container" id="evidence_container">
-            <p class="evidence-text">Evidence 1</p>
-        </div>
-        <p class="title">Matching Ghosts <i id="ghost_count"></i></p>
-        <div class="ghost-name">
-            <i id="ghost_name" listid="0">Phantom</i>
+        <div id="section_handler">
+            <div class="evidence-section">
+                <p class="title">Evidence Found</p>
+                <div class="evidence-container" id="evidence_container">
+                    <p class="evidence-text">Evidence 1</p>
+                </div>
+            </div>
+            <div class="ghosts-section">
+                <p class="title">Matching Ghosts <i id="ghost_count"></i></p>
+                <div class="ghost-name">
+                    <i id="ghost_name" listid="0">Phantom</i>
+                </div>
+            </div>
         </div>
     </div>
     <script>
         function renderTheme() {
+            //sets color scheme
             if (localStorage.getItem("overlayTheme") == null) {
                 document.getElementById('body').className = "light";
             }
             else{
                 document.getElementById('body').className = localStorage.getItem("overlayTheme");
+            }
+
+            //hides/shows sections
+            let hidden_section = localStorage.getItem('compressed_hide_section');
+            let sections_container = document.getElementById('section_handler');
+            if (hidden_section == null) {
+                sections_container.className = "";
+            }
+            else{
+                sections_container.className = hidden_section;
             }
         }
         function getEvidence() {
@@ -303,8 +327,13 @@
             }
             container.classList.add("fade-out");
             setTimeout(function(){
-                counter.innerHTML = "("+(c_ghost+1)+"/"+possible_ghosts.length+")";
-                container.innerHTML = possible_ghosts[c_ghost].name;
+                try {
+                    container.innerHTML = possible_ghosts[c_ghost].name;
+                    counter.innerHTML = "("+(c_ghost+1)+"/"+possible_ghosts.length+")";
+                } catch (error) {
+                    container.innerHTML = "No matches";
+                    counter.innerHTML = "";
+                }
                 container.classList.remove("fade-out");
                 setTimeout(function(){
                     container.setAttribute('listid', (c_ghost+1));
