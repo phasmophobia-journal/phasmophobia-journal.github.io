@@ -247,18 +247,21 @@
         }
 
     </style>
+    <style id="custom_styles">
+
+    </style>
     <div class="container">
         <div id="section_handler">
             <div class="evidence-section">
                 <p class="title">Evidence Found</p>
                 <div class="evidence-container" id="evidence_container">
-                    <p class="evidence-text">Evidence 1</p>
+                    <p class="evidence-text list-item">Evidence 1</p>
                 </div>
             </div>
             <div class="ghosts-section">
                 <p class="title">Matching Ghosts <i id="ghost_count"></i></p>
                 <div class="ghost-name">
-                    <i id="ghost_name" listid="0">Phantom</i>
+                    <i id="ghost_name" listid="0" class="list-item">Phantom</i>
                 </div>
             </div>
         </div>
@@ -282,6 +285,22 @@
             else{
                 sections_container.className = hidden_section;
             }
+
+            //Changes font sizes
+            let header_fs = localStorage.getItem('compressed_header_fs');
+            let list_fs = localStorage.getItem('compressed_list_fs');
+            let styles_container = document.getElementById('custom_styles');
+            let custom_style = "";
+
+            if (header_fs != null) {
+                custom_style += ".title{ font-size: "+header_fs+"px !important; } ";
+            }
+            if (list_fs != null) {
+                custom_style += ".list-item{ font-size: "+list_fs+"px !important; } ";
+            }
+            styles_container.innerHTML = custom_style;
+
+            
         }
         function getEvidence() {
             let evidence = [];
@@ -293,11 +312,11 @@
         }
         function printEvidence(evidence) {
             let evidence_container = document.getElementById('evidence_container');
-            let evidence_container_contents = "<p class='evidence-text'>No Evidence</p>"
+            let evidence_container_contents = "<p class='evidence-text list-item'>No Evidence</p>"
             if (evidence.length > 0) {
                 evidence_container_contents = "";
                 for (let i = 0; i < evidence.length; i++) {
-                    evidence_container_contents += "<p class='evidence-text'>"+evidences_map[evidence[i]].name+"</p>";
+                    evidence_container_contents += "<p class='evidence-text list-item'>"+evidences_map[evidence[i]].name+"</p>";
                 }
             }
             evidence_container.innerHTML = evidence_container_contents;
