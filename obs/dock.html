@@ -137,12 +137,29 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 14px;
         }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
         input[type=number] {
             -moz-appearance: textfield;
+        }
+        .display-none{
+            display: none !important;
         }
         .light{
             color: #333333;
@@ -332,6 +349,62 @@
             <input type="number" id="compressed_list_fs" min="1" placeholder="16" class="rgb-input memory-input" value="16"> <i>px</i>
         </div>
 
+        <div class="theme-option">
+            <label for="aio_advanced_styles">All-in-One Advanced Styles:</label>
+            <select id="aio_advanced_styles" class="memory-input">
+                <option value="false" selected>Disabled</option>
+                <option value="true">Enabled</option>
+            </select>
+        </div>
+
+    <div id="aio_a_s_container">
+        <div class="theme-option">
+            <label for="aio_header_font_color_0">Headers' Font Color (RGB):</label>
+            <div class="rgb-inputs-container">
+                <input type="number" id="aio_header_font_color_0" min="0" max="255" placeholder="R" class="rgb-input memory-input" value="255">
+                <input type="number" id="aio_header_font_color_1" min="0" max="255" placeholder="G" class="rgb-input memory-input" value="255">
+                <input type="number" id="aio_header_font_color_2" min="0" max="255" placeholder="B" class="rgb-input memory-input" value="255">
+            </div>
+        </div>
+
+        <div class="theme-option">
+            <label for="aio_header_bg_color_0">Headers' Background Color (RGB):</label>
+            <div class="rgb-inputs-container">
+                <input type="number" id="aio_header_bg_color_0" min="0" max="255" placeholder="R" class="rgb-input memory-input" value="255">
+                <input type="number" id="aio_header_bg_color_1" min="0" max="255" placeholder="G" class="rgb-input memory-input" value="255">
+                <input type="number" id="aio_header_bg_color_2" min="0" max="255" placeholder="B" class="rgb-input memory-input" value="255">
+            </div>
+        </div>
+        
+        <div class="theme-option">
+            <label for="aio_header_bg_opacity">Headers' Background Opacity: <i id="aio_header_bg_opacity_num"></i>%</label>
+            <input type="range" id="aio_header_bg_opacity" min="0" max="100" class="evidence-bg-opacity memory-input" value="50">
+        </div>
+
+        <div class="theme-option">
+            <label for="aio_list_font_color_0">Lists' Font Color (RGB):</label>
+            <div class="rgb-inputs-container">
+                <input type="number" id="aio_list_font_color_0" min="0" max="255" placeholder="R" class="rgb-input memory-input" value="255">
+                <input type="number" id="aio_list_font_color_1" min="0" max="255" placeholder="G" class="rgb-input memory-input" value="255">
+                <input type="number" id="aio_list_font_color_2" min="0" max="255" placeholder="B" class="rgb-input memory-input" value="255">
+            </div>
+        </div>
+
+        <div class="theme-option">
+            <label for="aio_list_bg_color_0">Lists' Background Color (RGB):</label>
+            <div class="rgb-inputs-container">
+                <input type="number" id="aio_list_bg_color_0" min="0" max="255" placeholder="R" class="rgb-input memory-input" value="255">
+                <input type="number" id="aio_list_bg_color_1" min="0" max="255" placeholder="G" class="rgb-input memory-input" value="255">
+                <input type="number" id="aio_list_bg_color_2" min="0" max="255" placeholder="B" class="rgb-input memory-input" value="255">
+            </div>
+        </div>
+        
+        <div class="theme-option">
+            <label for="aio_list_bg_opacity">Lists' Background Opacity: <i id="aio_list_bg_opacity_num"></i>%</label>
+            <input type="range" id="aio_list_bg_opacity" min="0" max="100" class="evidence-bg-opacity memory-input" value="50">
+        </div>
+    </div>
+
         <div class="hr"></div>
         <div class="evidence-overlay-settings">
             <p class="title3">Evidence Overlay Appearance</p>
@@ -443,6 +516,7 @@
         function saveOnMemory(element) {
             localStorage.setItem(element.id, element.value);
             updateSliderValue(element);
+            toggleAiOAdvancedStyles();
         }
         function loadFromMemory(element) {
             let saved_value = localStorage.getItem(element.id);
@@ -459,6 +533,7 @@
             }
             
             updateSliderValue(element);
+            toggleAiOAdvancedStyles();
         }
         function initializeMemory() {
             let inputs = document.getElementsByClassName('memory-input');
@@ -471,6 +546,18 @@
                 inputs[i].addEventListener('change', function () {
                     saveOnMemory(inputs[i]);
                 });
+            }
+        }
+
+
+        function toggleAiOAdvancedStyles() {
+            let aio_advanced_styles = localStorage.getItem("aio_advanced_styles");
+            let aio_a_s_container = document.getElementById('aio_a_s_container');
+            if (aio_advanced_styles == "true") {
+                aio_a_s_container.classList.remove("display-none");
+            }
+            else{
+                aio_a_s_container.classList.add("display-none");
             }
         }
 
