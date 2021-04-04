@@ -7,6 +7,22 @@
 </head>
 <body id="body">
     <script>
+
+        var objectives = [
+            { title: "Discover", description: "Discover what type of Ghost we are dealing with" },
+            { title: "Witness", description: "Have a member of your team witness a Ghost Event" },
+            { title: "Capture", description: "Capture a photo of the Ghost" },
+            { title: "EMF", description: "Find evidence of the paranormal with an EMF Reader" },
+            { title: "Motion", description: "Detect a Ghosts presence with a Motion Sensor" },
+            { title: "Smudge", description: "Cleanse the area near the Ghost using Smudge Sticks" },
+            { title: "Crucifix", description: "Prevent the Ghost from hunting with a Crucifix" },
+            { title: "Salt", description: "Get a Ghost to walk through Salt" },
+            { title: "Candle", description: "Detect a Ghost presence with a candle" },
+            { title: "Escape", description: "Intermediate and Professional: Escape the Ghost during a hunt with zero deaths" },
+            { title: "Repel", description: "Professional: Repel the Ghost with a smudge stick while it's chasing someone" },
+            { title: "Sanity", description: "Multiplayer: Get average sanity below 25%" },
+        ];
+
         var ghosts_map = [
             {
                 name:"Shade",
@@ -318,6 +334,26 @@
             <i>Ghost Name</i>
             <input type="text" id="ghostName" onkeyup="updateEvidence();" />
         </div>
+        <div class="evidence-section">
+            <i>Objective 1</i>
+            <select class="objective-select-0" onchange="updateEvidence();">
+            </select>
+        </div>
+        <div class="evidence-section">
+            <i>Objective 2</i>
+            <select class="objective-select-1" onchange="updateEvidence();">
+            </select>
+        </div>
+        <div class="evidence-section">
+            <i>Objective 3</i>
+            <select class="objective-select-2" onchange="updateEvidence();">
+            </select>
+        </div>
+        <div class="evidence-section">
+            <i>Objective 4</i>
+            <select class="objective-select-3" onchange="updateEvidence();">
+            </select>
+        </div>
         <button class="reset-evidence" onclick="location.reload();">Reset</button>
         <p class="title2">Matching Ghosts</p>
         <ol id="ghosts_list">
@@ -325,15 +361,15 @@
         <p class="title2">Appearance Settings</p>
         <p class="title3">Ghost Name</p>
         <!--<div class="theme-option">
-            <label for="dockTheme">Show yes/no:</label>
-            <input type="checkbox" id="showGhostName" onchange="showGhostName(this.checked)" />
-        </div>
-        <div class="hr"></div>
-        <p class="title3">Ghost Response</p>
-        <div class="theme-option">
-            <label for="dockTheme">Show yes/no:</label>
-            <input type="checkbox" id="showGhostResponse" onchange="showGhostResponse(this.checked)" />
-        </div>-->
+        <label for="dockTheme">Show yes/no:</label>
+        <input type="checkbox" id="showGhostName" onchange="showGhostName(this.checked)" />
+    </div>
+    <div class="hr"></div>
+    <p class="title3">Ghost Response</p>
+    <div class="theme-option">
+        <label for="dockTheme">Show yes/no:</label>
+        <input type="checkbox" id="showGhostResponse" onchange="showGhostResponse(this.checked)" />
+    </div>-->
         <div class="hr"></div>
         <p class="title3">OBS Dock Appearance</p>
         <div class="theme-option">
@@ -472,22 +508,37 @@
 
 
     <script>
+
+        function loadObjectives() {
+
+            for (var objCount = 0; objCount < 4; objCount++) {
+
+                var objective = document.getElementsByClassName("objective-select-" + objCount);
+
+                let storedSetting = localStorage.getItem("objective-" + objCount);
+
+                for (var obj = 0; obj < objectives.length; obj++) {
+
+                    let option = document.createElement("option");
+                    option.value = obj;
+                    option.text = objectives[obj].title;
+
+                    objective[0]
+                        .add(option);
+
+                    if (obj === objCount) {
+
+                        option.selected = true;
+                        localStorage.setItem("objective-" + objCount, Number(obj));
+                    } 
+                }
+            }
+        }
+
         function renderTheme(dock_theme) {
             document.getElementById('body').className = dock_theme;
         }
-        //function showGhostName(value) {
-        //    localStorage.setItem("showGhostName", value);
-        //}
-        //function getGhostName() {
-        //    let showGhostName = (localStorage.getItem("showGhostName") === 'true');
-        //    document.getElementById('showGhostName').checked = showGhostName;
-        //}
-        //function showGhostResponse(value) {
-        //    localStorage.setItem("showGhostResponse", value);
-        //}
-        //function getGhostResponse() {
-        //    document.getElementById('showGhostResponse').checked = (localStorage.getItem("showGhostResponse") === 'true');
-        //}
+
         function themesMemory() {
             let overlay_theme = localStorage.getItem("overlayTheme");
             let dock_theme = localStorage.getItem("dockTheme");
@@ -514,7 +565,13 @@
             localStorage.setItem("ghostName", document.getElementById('ghostName').value);
 
             let ghostResponse = document.getElementsByClassName('response-select');
-            localStorage.setItem("ghostResponse", Number(ghostResponse[0].value))
+            localStorage.setItem("ghostResponse", Number(ghostResponse[0].value));
+
+            for (var objCount = 0; objCount < 4; objCount++) {
+
+                var objective = document.getElementsByClassName('objective-select-' + objCount);
+                localStorage.setItem("objective-" + objCount, Number(objective[0].value));
+            }
 
             evaluateEvidence(evidenceValues);
         }
@@ -604,8 +661,8 @@
         }
 
 
-        //getGhostName();
-        //getGhostResponse();
+        loadObjectives();
+
         updateEvidence();
         themesMemory();
         renderTheme(localStorage.getItem('dockTheme'));
