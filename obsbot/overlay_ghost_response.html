@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Overlay</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+</head>
+<body id="body" class="light">
+    <script>
+        var ghost_response = [
+            'Unknown',
+            'Alone',
+            'Everyone'
+        ]
+    </script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            font-family: 'Archivo Black', sans-serif;
+        }
+        i{
+            font-style: normal;
+        }
+        .fade-out{
+            opacity: 0;
+        }
+        body{
+            background-color: rgba(0, 0, 0, 0);
+            background-color: transparent;
+        }
+        .light .title{
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #222222;
+            text-align: center;
+            padding: 4px 0px;
+            font-size: 20px;
+            box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 10;
+        }
+        .dark .title{
+            background-color: rgba(30, 30, 30, 0.7);
+            color: #dddddd;
+            text-align: center;
+            padding: 4px 0px;
+            font-size: 20px;
+            box-shadow: none;
+            position: relative;
+            z-index: 10;
+        }
+        .light .evidence-container .evidence-text{
+            padding: 2px 0px;
+            border-bottom: 1px solid #666666;
+            font-size: 16px;
+            color: #000000;
+            background-color: rgba(200, 200, 200, 0.7);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .dark .evidence-container .evidence-text{
+            padding: 2px 0px;
+            border-bottom: 1px solid #444444;
+            font-size: 16px;
+            color: #dddddd;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .light .ghost-name{
+            padding: 5px 0px 2px 0px;
+            background-color: rgba(200, 200, 200, 0.7);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .dark .ghost-name{
+            padding: 5px 0px 2px 0px;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .light .ghost-name i{
+            font-size: 16px;
+            color: #000000;
+            font-style: normal;
+            transition: opacity 0.3s;
+        }
+        .dark .ghost-name i{
+            font-size: 16px;
+            color: #dddddd;
+            font-style: normal;
+            transition: opacity 0.3s;
+        }
+
+        .hide-evidence .evidence-section{
+            display: none;
+        }
+        .hide-ghosts .ghosts-section{
+            display: none;
+        }
+        .hidden{
+            display:none;
+        }
+
+    </style>
+    <style id="custom_styles">
+
+    </style>
+    <style id="advanced_styles">
+
+    </style>
+    <div class="container">
+        <div id="section_handler">
+            <div>
+                <p class="title">Ghost Response</p>
+                <div class="evidence-container">
+                    <p class="evidence-text list-item" id="ghostResponse"></p>
+                </div>
+            </div>
+            <div>
+                <p class="title">Ghost Name</p>
+                <div class="ghost-name">
+                    <i class="list-item" id="ghostName"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function renderTheme() {
+            //sets color scheme
+            if (localStorage.getItem("overlayTheme") == null) {
+                document.getElementById('body').className = "light";
+            }
+            else{
+                document.getElementById('body').className = localStorage.getItem("overlayTheme");
+            }
+
+            //hides/shows sections
+            let hidden_section = localStorage.getItem('compressed_hide_section');
+            let sections_container = document.getElementById('section_handler');
+            if (hidden_section == null) {
+                sections_container.className = "";
+            }
+            else{
+                sections_container.className = hidden_section;
+            }
+
+            //Changes font sizes
+            let header_fs = localStorage.getItem('compressed_header_fs');
+            let list_fs = localStorage.getItem('compressed_list_fs');
+            let styles_container = document.getElementById('custom_styles');
+            let custom_style = "";
+
+            if (header_fs != null) {
+                custom_style += ".title{ font-size: "+header_fs+"px !important; } ";
+            }
+            if (list_fs != null) {
+                custom_style += ".list-item{ font-size: "+list_fs+"px !important; } ";
+            }
+            styles_container.innerHTML = custom_style;
+
+
+            //Uses Custom Styles
+            let advanced_styles = localStorage.getItem('aio_advanced_styles');
+            let advanced_styles_container = document.getElementById('advanced_styles');
+            let advanced_styles_css = "";
+            
+            if (advanced_styles == "true") {
+                //Headers' Font Color
+                /* hf_rgb_r = header font color (rgb format, red channel) */
+                let hf_rgb_r = localStorage.getItem('aio_header_font_color_0');
+                let hf_rgb_g = localStorage.getItem('aio_header_font_color_1');
+                let hf_rgb_b = localStorage.getItem('aio_header_font_color_2');
+                advanced_styles_css += ".title{ color: rgb("+hf_rgb_r+", "+hf_rgb_g+", "+hf_rgb_b+") !important; }";
+                
+                //Headers' Background Color
+                /* hbg_rgb_r = header background color (rgb format, red channel) */
+                let hbg_rgb_r = localStorage.getItem('aio_header_bg_color_0');
+                let hbg_rgb_g = localStorage.getItem('aio_header_bg_color_1');
+                let hbg_rgb_b = localStorage.getItem('aio_header_bg_color_2');
+                let hbg_rgb_d = Number(localStorage.getItem('aio_header_bg_opacity'))/100;
+                advanced_styles_css += ".title{ background-color: rgb("+hbg_rgb_r+", "+hbg_rgb_g+", "+hbg_rgb_b+", "+hbg_rgb_d+") !important; }";
+
+                //Lists' Font Color
+                /* lf_rgb_r = list font color (rgb format, red channel) */
+                let lf_rgb_r = localStorage.getItem('aio_list_font_color_0');
+                let lf_rgb_g = localStorage.getItem('aio_list_font_color_1');
+                let lf_rgb_b = localStorage.getItem('aio_list_font_color_2');
+                advanced_styles_css += ".list-item{ color: rgb("+lf_rgb_r+", "+lf_rgb_g+", "+lf_rgb_b+") !important; }";
+                
+                //Lists' Background Color
+                /* lbg_rgb_r = list background color (rgb format, red channel) */
+                let lbg_rgb_r = localStorage.getItem('aio_list_bg_color_0');
+                let lbg_rgb_g = localStorage.getItem('aio_list_bg_color_1');
+                let lbg_rgb_b = localStorage.getItem('aio_list_bg_color_2');
+                let lbg_rgb_d = Number(localStorage.getItem('aio_list_bg_opacity'))/100;
+                advanced_styles_css += ".list-item{ background: none !important; }"
+                advanced_styles_css += ".evidence-container, .ghost-name{ background-color: rgb("+lbg_rgb_r+", "+lbg_rgb_g+", "+lbg_rgb_b+", "+lbg_rgb_d+") !important; }";
+            }
+            advanced_styles_container.innerHTML = advanced_styles_css;
+
+            
+        }
+        function getEvidence() {
+
+            getGhostReponse();
+            getGhostName();
+        }
+
+        function getGhostName() {
+            document.getElementById('ghostName').innerText = localStorage.getItem('ghostName');
+        }
+        function getGhostReponse() {
+            document.getElementById('ghostResponse').innerText = ghost_response[Number(localStorage.getItem('ghostResponse'))];
+        }
+
+        function update() {
+            renderTheme();
+            getEvidence();
+        }
+
+        update();
+        setInterval(update, 1000);
+    </script>
+    
+</body>
+</html>
