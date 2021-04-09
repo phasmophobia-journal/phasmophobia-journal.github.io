@@ -50,15 +50,11 @@ client.on('message', (channel, tags, message, self) => {
     const args = message.slice(1).split(' ');
     const command = args.shift().toLowerCase();
 
-    let isMod = user.mod || user['user-type'] === 'mod';
-    let isBroadcaster = channel.slice(1) === user.username;
-    let isModUp = isMod || isBroadcaster;
+    console.log(tags);
+
+    let isModUp = tags.mod || (tags.badges.broadcaster !== undefined);
 
     if (!isModUp) return;
-
-    //if (command === 'echo') {
-    //    client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
-    //}
 
     switch (command) {
 
