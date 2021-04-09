@@ -3,8 +3,10 @@
     "",
     "\\assets",
     "\\obs",
+    "\\obsbot",
+    "\\obsbot\\scripts",
     "\\obs\\assets"
   ],
-  "SelectedNode": "\\obs\\overlay_objectives.html",
+  "SelectedNode": "\\obs\\dock.html",
   "PreviewInSolutionExplorer": false
 }
